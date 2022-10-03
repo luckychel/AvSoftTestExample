@@ -1,0 +1,73 @@
+﻿@model IEnumerable<WebApplication1.Models.Report>
+
+@{
+    ViewData["Title"] = "Report";
+}
+
+<h1>Report</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Key)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Count)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CountMoreThenOne)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Key)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CountMoreThenOne)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div>
+    <h1>Filled by ajax</h1>
+    <table class="table" id="myTable">
+        <thead>
+            <tr>
+                <th>
+                    Key
+                </th>
+                <th>
+                    Count
+                </th>
+                <th>
+                    CountMoreThenOne
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+ <script>
+
+     $.ajax({
+        url: "/Counters/ReportJson",
+        success: function(items) {
+            items.forEach(function(item){
+               $('#myTable').append('<tr><td>'+item.key+'</td><td>'+item.count+'</td><td>'+item.countMoreThenOne+'</td></tr>');
+            })
+        }
+    });
+
+ </script>
